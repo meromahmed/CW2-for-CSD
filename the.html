@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAFitness | Elite Accessible Fitness</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="first.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header>
+        <nav class="container nav-flex" role="navigation" aria-label="Main Navigation">
+            <div class="logo">QA<span>FITNESS</span></div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" id="home-link">Home</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#plans">Plans</a></li>
+                <li><a href="#calculator">BMI Tool</a></li>
+                <li><a href="contact.html" class="nav-btn">Join Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        
+        <section class="hero" role="region" aria-label="Welcome Banner">
+            <div class="hero-content">
+                <h1 class="fade-in">REDEFINE YOUR LIMITS</h1>
+                <p>Experience the city's most elite, inclusive fitness center.</p>
+                <div id="live-clock" class="clock-display" aria-live="polite"></div>
+                <a href="contact.html" class="cta-button">Start 7-Day Free Trial</a>
+            </div>
+        </section>
+
+        <section id="facilities" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">World-Class Facilities</h2>
+                <div class="grid-display">
+                    
+                    <article class="facility-card">
+                        <img src="images/machines.png" alt="Advanced multi-station strength training machine with cable pulleys.">
+                        <div class="card-text">
+                            <h3>Strength Center</h3>
+                            <p>Modern cable machines designed for biomechanical efficiency and safety.</p>
+                        </div>
+                    </article>
+
+                    <article class="facility-card">
+                        <img src="images/weight.png" alt="Sleek free weight room with organized dumbbell racks and benches.">
+                        <div class="card-text">
+                            <h3>Elite Weight Room</h3>
+                            <p>A focused environment with premium dumbbells, barbells, and power racks.</p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="calculator" class="section-padding gray-bg">
+            <div class="container">
+                <div class="calc-wrapper">
+                    <div class="calc-info">
+                        <h2>BMI Calculator</h2>
+                        <p>Track your health base with our accessible tool. We focus on progress, not just numbers.</p>
+                    </div>
+                    <div class="calc-card">
+                        <div class="input-row">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" placeholder="e.g. 75">
+                        </div>
+                        <div class="input-row">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" placeholder="e.g. 180">
+                        </div>
+                        <button id="calculate-bmi" class="calc-btn">Calculate Now</button>
+                        <div id="bmi-result" class="result-box" aria-live="assertive">
+                            Enter details to see results.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="plans" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Membership Plans</h2>
+                <div class="grid-display">
+                    <div class="plan-card">
+                        <h3>Starter</h3>
+                        <div class="price">$25<span>/mo</span></div>
+                        <ul>
+                            <li>Standard Gym Access</li>
+                            <li>Locker Room & Showers</li>
+                            <li>Free WiFi</li>
+                        </ul>
+                    </div>
+                    <div class="plan-card featured">
+                        <div class="badge">Most Popular</div>
+                        <h3>Pro Elite</h3>
+                        <div class="price">$45<span>/mo</span></div>
+                        <ul>
+                            <li>24/7 Access</li>
+                            <li>Unlimited Group Classes</li>
+                            <li>1-on-1 Trainer Intro</li>
+                        </ul>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Ultimate</h3>
+                        <div class="price">$75<span>/mo</span></div>
+                        <ul>
+                            <li>Everything in Pro</li>
+                            <li>Personal Training 2x/Week</li>
+                            <li>Custom Diet Plans</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 QAFitness Center. All bodies, all goals, one community.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="first.js"></script>
+</body>
+</html>
