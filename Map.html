@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QA Fitness - Our Gym Location</title>
+
+  <!-- Leaflet CSS (map library) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #117495;
+      color: #fff;
+      padding: 12px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .info {
+      padding: 8px 12px;
+      background: #f5f5f5;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    #map {
+      height: calc(100vh - 90px); /* fill the rest of the screen */
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>QA Fitness — Main Gym Location</header>
+
+  <div class="info">
+    QA Fitness, 10 Rosebery Avenue, London — Postcode: EC18 4TF
+  </div>
+
+  <div id="map" aria-label="Map showing QA Fitness gym location"></div>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <script>
+    // === One gym branch (QA Fitness gym) ===
+    const gymLat = 51.52261828463715;      // latitude
+    const gymLng = -0.11155711683042363;   // longitude
+
+    // Create the map and centre it on the gym
+    const map = L.map('map').setView([gymLat, gymLng], 16);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Add a marker at the gym location with a popup
+    L.marker([gymLat, gymLng])
+      .addTo(map)
+      .bindPopup(
+        '<strong>QA Fitness - 10 Rosebery Avenue</strong><br>EC18 4TF<br>Open 6am – 10pm'
+      )
+      .openPopup();
+  </script>
+</body>
+</html>
