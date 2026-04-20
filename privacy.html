@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>QA Fitness — Cookies & Privacy</title>
+<style>
+  :root{--bg:#071025;--panel:#0b1a2a;--muted:#9fbadf;--accent:#06b6d4;--text:#e9f7ff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+  header{position:relative;height:40vh;min-height:260px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  header img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.55)}
+  .hero{position:relative;z-index:2;text-align:center;padding:18px}
+  .hero h1{margin:0;font-size:2rem}
+  .hero p{margin:8px 0 0;color:var(--muted)}
+  main{max-width:980px;margin:20px auto;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:12px}
+  h2{color:#fff;margin:0 0 8px}
+  .policy-section{margin-bottom:18px;padding:12px;border-radius:8px;background:rgba(255,255,255,0.01)}
+  .small{font-size:0.95rem;color:var(--muted);margin:6px 0}
+  ul.small{margin:6px 0 0 18px}
+  footer{max-width:980px;margin:10px auto 40px;padding:12px;color:var(--muted);text-align:center}
+
+/* consent UI */
+  .consent{position:fixed;left:16px;right:16px;bottom:16px;background:linear-gradient(90deg, rgba(8,18,30,0.98), rgba(6,12,22,0.98));border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6);z-index:999}
+  .consent .text{flex:1;color:var(--muted);font-size:0.95rem}
+  .consent .actions{display:flex;gap:8px}
+  .btn{padding:8px 12px;border-radius:8px;cursor:pointer;border:0;font-weight:600}
+  .btn.primary{background:var(--accent);color:#012}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted)}
+  .manage{color:var(--muted);cursor:pointer;text-decoration:underline;font-size:0.93rem}
+
+/* modal */
+  .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:1000;padding:18px}
+  .modal.active{display:flex}
+  .box{background:var(--panel);padding:18px;border-radius:10px;color:var(--text);max-width:760px;width:100%}
+  .pref-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px dashed rgba(255,255,255,0.03)}
+  .pref-row:first-of-type{border-top:0}
+  .cookie-debug{margin-top:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);font-family:monospace;color:#cfe6ff}
+
+/* layout small screens */
+  @media (max-width:640px){ .consent{flex-direction:column;align-items:stretch} .hero h1{font-size:1.4rem} }
+</style>
+</head>
+<body>
+  <header class="site-header">
+  <div class="logo-wrap" aria-hidden="false">
+    <img src="gymm.png.jpeg" alt="Gym logo" class="logo">
+  </div>
+  <div class="hero" role="banner">
+    <h1>QA Fitness</h1><p>Privacy-first approach to improving student wellbeing</p>
+
+  </div>
+</header>
+
+
+  <main>
+    <section class="policy-section" aria-labelledby="cookies-title">
+      <h2 id="cookies-title">Cookies & Privacy — Quick Summary</h2>
+      <p class="small">We use cookies to ensure core functionality and (with consent) to collect anonymous analytics that help us improve class scheduling, equipment info, and site performance.</p>
+      <ul class="small">
+        <li><strong>Essential:</strong> Sessions, security (always active).</li>
+        <li><strong>Analytics:</strong> Anonymous usage metrics (enabled only with consent).</li>
+        <li><strong>Retention:</strong> Consent stored for 30 days. Analytics aggregated and anonymized.</li>
+      </ul>
+    </section>
+
+    <section class="policy-section" aria-labelledby="qa-title">
+      <h2 id="qa-title">Privacy & Cookies — Q&A (Gym / Fitness)</h2>
+      <p class="small"><strong>1. What personal data do we collect?</strong><br>Account info (name, email), membership and booking data, optional fitness profile (goals, preferences). Analytics data is anonymous.</p>
+      <p class="small"><strong>2. Why cookies?</strong><br>To maintain secure sessions, remember preferences, and anonymously measure site usage to improve student services.</p>
+      <p class="small"><strong>3. Can I change consent?</strong><br>Yes — open Manage Preferences on the banner at any time or clear cookies in your browser. Changes apply immediately on this page.</p>
+      <p class="small"><strong>4. Do you share data?</strong><br>Only with vetted service providers (hosting, payments, analytics). Analytics providers receive anonymized data; marketing vendors are used only with explicit opt-in.</p>
+      <p class="small"><strong>5. How long do you keep data?</strong><br>Consent: 30 days. Aggregated analytics: up to 12 months. Membership/account data: per university retention policy.</p>
+      <p class="small"><strong>Contact:</strong> privacy@campus.example.edu</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="technical-title">
+      <h2 id="technical-title">Technical Notes (for assignment)</h2>
+      <p class="small">This page records explicit consent (cookie + localStorage) with timestamp, uses accessible controls (aria attributes, modal), and defers analytics scripts until consent is given. For server-side persistence, send a POST with the consent object to a backend and store the record with timestamp and session identifier.</p>
+      <div class="cookie-debug" id="consentView" aria-live="polite">No consent set yet.</div>
+    </section>
+  </main>
+
+  <footer>© QA Fitness — Demonstration privacy & cookie page</footer>
+
+  <!-- Consent banner -->
+  <div class="consent" id="consentBanner" role="region" aria-label="Cookie consent" aria-live="polite">
+    <div class="text">We use essential cookies for site functionality and optional analytics cookies to improve the student experience. Manage preferences or accept all.</div>
+    <div class="actions">
+      <button class="btn ghost" id="manageBtn">Manage</button>
+      <button class="btn primary" id="acceptBtn">Accept All</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="prefsModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="prefsTitle">
+    <div class="box">
+      <h3 id="prefsTitle">Cookie Preferences</h3>
+      <p class="small">Select which cookies you allow. Essential cookies are required for the site to operate.</p>
+
+      <div class="pref-row">
+        <div>
+          <strong>Essential cookies</strong>
+          <div class="small">Required for login, accessibility, and secure sessions.</div>
+        </div>
+        <div><input type="checkbox" id="essential" checked disabled aria-disabled="true"></div>
+      </div>
+
+      <div class="pref-row">
+        <div>
+          <strong>Analytics cookies</strong>
+          <div class="small">Anonymous statistics used to improve content and services.</div>
+        </div>
+        <div><input type="checkbox" id="analytics"></div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
+        <button class="btn ghost" id="cancelBtn">Cancel</button>
+        <button class="btn primary" id="saveBtn">Save Preferences</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* Cookie helpers */
+function setCookie(name, value, days){
+  const d = new Date(); d.setTime(d.getTime() + days*24*60*60*1000);
+  document.cookie = name + "=" + encodeURIComponent(value) + ";path=/;SameSite=Lax;expires=" + d.toUTCString();
+}
+function getCookie(name){
+  return document.cookie.split('; ').reduce((acc,cur)=>{
+    const [k,v]=cur.split('='); return k===name?decodeURIComponent(v):acc;
+  }, null);
+}
+
+/* Elements */
+const banner = document.getElementById('consentBanner');
+const manageBtn = document.getElementById('manageBtn');
+const acceptBtn = document.getElementById('acceptBtn');
+const prefsModal = document.getElementById('prefsModal');
+const analyticsInput = document.getElementById('analytics');
+const saveBtn = document.getElementById('saveBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const consentView = document.getElementById('consentView');
+
+function loadConsent(){
+  try{
+    const cookie = getCookie('site_consent');
+    if(cookie) return JSON.parse(cookie);
+    const ls = localStorage.getItem('site_consent');
+    if(ls) return JSON.parse(ls);
+  }catch(e){}
+  return null;
+}
+function renderConsentView(c){
+  if(!c){ consentView.textContent = "No consent set yet."; return; }
+  consentView.textContent = `Consent: essential=${c.essential} analytics=${c.analytics} (timestamp=${c.timestamp})`;
+}
+
+/* init */
+const existing = loadConsent();
+if(existing){ banner.style.display='none'; renderConsentView(existing); } else { renderConsentView(null); }
+
+/* modal handlers */
+manageBtn.addEventListener('click', ()=>{
+  const c = loadConsent();
+  analyticsInput.checked = c ? !!c.analytics : false;
+  prefsModal.classList.add('active'); prefsModal.setAttribute('aria-hidden','false');
+  analyticsInput.focus();
+});
+cancelBtn.addEventListener('click', ()=>{ prefsModal.classList.remove('active'); prefsModal.setAttribute('aria-hidden','true'); manageBtn.focus(); });
+
+function saveConsentObj(obj){
+  obj.timestamp = new Date().toISOString();
+  const json = JSON.stringify(obj);
+  setCookie('site_consent', json, 30);
+  localStorage.setItem('site_consent', json);
+  renderConsentView(obj);
+  banner.style.display='none';
+  prefsModal.classList.remove('active'); prefsModal.setAttribute('aria-hidden','true');
+  if(obj.analytics){
+    console.info("Analytics allowed — load analytics scripts here.");
+  } else {
+    console.info("Analytics disallowed.");
+  }
+}
+
+/* actions */
+acceptBtn.addEventListener('click', ()=> saveConsentObj({essential:true, analytics:true}));
+saveBtn.addEventListener('click', ()=> saveConsentObj({essential:true, analytics:!!analyticsInput.checked}));
+
+/* accessibility: close modal on Escape */
+window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && prefsModal.classList.contains('active')){ prefsModal.classList.remove('active'); prefsModal.setAttribute('aria-hidden','true'); } });
+
+/* small debug API */
+window.gymPrivacy = {
+  getConsent: loadConsent,
+  clearConsent: ()=>{ setCookie('site_consent','',-1); localStorage.removeItem('site_consent'); consentView.textContent='Consent cleared.'; banner.style.display='flex'; }
+};
+</script>
+</body>
+</html>
