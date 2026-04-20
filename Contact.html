@@ -1,1 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QA Fitness - Registration</title>
+  <style>
+    :root{--primary:#1f8ef1;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%);}
+    /* watermark */
+    body::before{content:"QA FITNESS";position:fixed;left:50%;top:8%;transform:translateX(-50%)rotate(-15deg);
+      font-size:120px;color:rgba(255,255,255,0.04);letter-spacing:10px;pointer-events:none;user-select:none}
+    .card{width:420px;background:rgba(255,255,255,0.96);padding:22px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,0.25)}
+    h2{margin:0 0 6px;font-size:20px}
+    p.lead{margin:0 0 14px;color:var(--muted);font-size:13px}
+    label{display:block;margin-bottom:6px;font-size:13px;color:#333}
+    .radio-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    .radio-row label{display:flex;align-items:center;gap:8px;font-size:14px}
+    select,input{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;margin-bottom:12px}
+    .form-row{display:flex;gap:10px}
+    .form-row .half{flex:1}
+    .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
+    button{background:var(--primary);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:700}
+    .note{font-size:12px;color:var(--muted);margin-top:8px}
+    @media (max-width:460px){.card{width:92%;} body::before{font-size:64px;top:2%}}
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="QA Fitness registration">
+    <h2>QA Fitness — Registration</h2>
+    <p class="lead">Choose 7-day free trial or pick a membership period and submit to register.</p>
 
+    <form id="regForm" novalidate>
+      <label>Registration Type</label>
+      <div class="radio-row" role="radiogroup" aria-label="Registration Type">
+        <label><input type="radio" name="type" value="trial" id="typeTrial" checked> 7-Day Free Trial</label>
+        <label><input type="radio" name="type" value="membership" id="typeMembership"> Membership</label>
+      </div>
+
+      <div id="membershipOptions" style="display:none;">
+        <label for="period">Membership Period</label>
+        <select id="period" name="period">
+          <option value="">-- Select Period --</option>
+          <option value="3-months">3 Months — $75</option>
+          <option value="6-months">6 Months — $135</option>
+          <option value="1-year">1 Year — $240</option>
+        </select>
+      </div>
+
+      <div style="margin-top:6px;font-weight:700;margin-bottom:8px">Personal Information</div>
+
+      <div class="form-row">
+        <div class="half">
+          <label for="firstName">First Name *</label>
+          <input id="firstName" name="firstName" type="text" required>
+        </div>
+        <div class="half">
+          <label for="lastName">Last Name *</label>
+          <input id="lastName" name="lastName" type="text" required>
+        </div>
+      </div>
+
+      <label for="email">Email *</label>
+      <input id="email" name="email" type="email" required>
+
+      <div class="form-row">
+        <div class="half">
+          <label for="phone">Phone *</label>
+          <input id="phone" name="phone" type="tel" required>
+        </div>
+        <div class="half">
+          <label for="dob">Date of Birth *</label>
+          <input id="dob" name="dob" type="date" required>
+        </div>
+      </div>
+
+      <label><input type="checkbox" id="agree" required> I agree to QA Fitness terms & policies.</label>
+
+      <div class="actions">
+        <button type="submit">Submit Registration</button>
+      </div>
+
+      <div class="note" aria-live="polite">Selecting "Membership" will require choosing a period (3, 6, or 1 year).</div>
+    </form>
+  </div>
+
+  <script>
+    const typeTrial = document.getElementById('typeTrial');
+    const typeMembership = document.getElementById('typeMembership');
+    const membershipOptions = document.getElementById('membershipOptions');
+    const periodSelect = document.getElementById('period');
+    const form = document.getElementById('regForm');
+
+    function toggleMembershipOptions() {
+      membershipOptions.style.display = typeMembership.checked ? 'block' : 'none';
+      if (!typeMembership.checked) periodSelect.value = '';
+    }
+    document.querySelectorAll('input[name="type"]').forEach(r => r.addEventListener('change', toggleMembershipOptions));
+    toggleMembershipOptions();
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Basic validation
+      if (typeMembership.checked && periodSelect.value === '') {
+        alert('Please choose a membership period.');
+        periodSelect.focus();
+        return;
+      }
+      if (!form.checkValidity()) {
+        alert('Please fill required fields.');
+        return;
+      }
+      // Collect data
+      const fd = new FormData(form);
+      const data = Object.fromEntries(fd.entries());
+      console.log('Registration submitted:', data);
+      alert('Registration submitted (demo). Check console for details.');
+      form.reset();
+      toggleMembershipOptions();
+    });
+  </script>
+</body>
+</html>
