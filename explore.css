@@ -79,3 +79,104 @@ body {
     margin-top: 15px;
     border: 2px solid var(--primary);
 }
+
+
+/* Footer Container */
+.site-footer {
+    background-color: var(--dark-bg);
+    color: var(--text-white);
+    padding: 80px 0 40px;
+    border-top: 2px solid #222;
+}
+
+/* Footer Container */
+.site-footer {
+    background-color: var(--dark-bg);
+    color: var(--text-white);
+    padding: 80px 0 40px;
+    border-top: 2px solid #222;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+
+.logo {
+    font-size: 48px;        /* controls QA */
+    font-weight: 800;
+    color: white;           /* QA in white */
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #4CAF50;         /* Fitness in green */
+    font-size: 48px;        /* same size as QA */
+    font-weight: 800;
+}
+
+
+
+/* Social Bar Styling */
+.social-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 0;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    margin-bottom: 30px;
+}
+
+.social-bar span {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1px;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #1a1a1a;
+    color: var(--text-white);
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: var(--transition);
+    border: 1px solid #333;
+}
+
+/* Neon Hover Effect */
+.social-icon:hover {
+    background: var(--primary-neon);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--primary-neon);
+    border-color: var(--primary-neon);
+}
+
+.footer-bottom {
+    text-align: center;
+    color: var(--text-gray);
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .social-bar { flex-direction: column; }
+}
