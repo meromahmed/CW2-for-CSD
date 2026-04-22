@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // Memorable scroll effect for navigation [cite: 22]
+    // 1. Smooth scroll for navigation
     $('.nav-links a').on('click', function(event) {
         if (this.hash !== "") {
             event.preventDefault();
@@ -10,17 +10,19 @@ $(document).ready(function() {
         }
     });
 
-    // Fade-in effect for cards as you scroll down 
-    $(window).scroll(function() {
+    // 2. Fade-in effect for cards as you scroll down
+    $(window).on('scroll', function() {
         $('.value-card').each(function() {
-            var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-            var bottom_of_window = $(window).scrollTop() + $(window).height();
-            if (bottom_of_window > bottom_of_object - 200) {
-                $(this).animate({'opacity':'1'}, 500);
+            var object_top = $(this).offset().top;
+            var window_bottom = $(window).scrollTop() + $(window).height();
+
+            // Trigger when the card is slightly visible
+            if (window_bottom > object_top + 50) {
+                $(this).animate({'opacity': '1'}, 600);
             }
         });
     });
-});
 
- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
- <script src="js/script.js"></script>
+    // Run trigger once on load
+    $(window).trigger('scroll');
+});
